@@ -14,12 +14,12 @@ export default function SignupScreen({ navigation }) {
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
 
-	function signUp() {
+	async function signUp() {
 		try {
-			// await Auth.signUp({ username, password, attributes: { email } });
-			console.log('✅ Sign-up Confirmed');
-			console.log(username, email, password)
-			// navigation.navigate('ConfirmSignUp');
+			await Auth.signUp({ username, password, attributes: { email } });
+			console.log('✅ Sign-up Complete');
+			// Is it safe to pass password via props?
+			navigation.navigate('ConfirmSignup', { username, password });
 		} catch (error) {
 			console.log('❌ Error signing up...', error);
 		}

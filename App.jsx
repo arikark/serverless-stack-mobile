@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { NavigationContainer } from '@react-navigation/native';
+import Navigators from './src/navigators/Navigators';
 
-import AuthStackScreens from './src/navigators/AuthStackScreens';
-import AppStackScreens from './src/navigators/AppStackScreens';
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 
 import Amplify from 'aws-amplify';
@@ -59,14 +57,11 @@ const theme = {
 };
 
 export default function App() {
-  // const userToken = ''
   return (
     <ThemeProvider theme={theme} >
-      <NavigationContainer>
-        <AuthContextProvider>
-          {1 === 2 ? (<AppStackScreens />) : (<AuthStackScreens />)}
-        </AuthContextProvider>
-      </NavigationContainer>
+      <AuthContextProvider>
+        <Navigators />
+      </AuthContextProvider>
     </ThemeProvider>
   );
 }

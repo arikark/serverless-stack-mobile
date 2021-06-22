@@ -9,8 +9,8 @@ export function useAuthContext() {
 
 // context provider (wraps context consumers)
 export function AuthContextProvider({ children }) {
-	const [user, setUser] = useState(null);
-	const [authState, setAuthState] = useState(false);
+	const [user, setUser] = useState({});
+	const [authState, setAuthState] = useState('initialising');
 	return (
 		<AuthContext.Provider value={{ user, setUser, authState, setAuthState }}>
 			{children}
