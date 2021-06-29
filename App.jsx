@@ -1,12 +1,16 @@
 import React from 'react';
 
+import { Provider } from 'react-redux'
+
+import store from './src/app/store';
+
 import Navigators from './src/navigators/Navigators';
 
 import { AuthContextProvider } from "./src/contexts/AuthContext";
 
 import Amplify from 'aws-amplify';
 
-import config from './config';
+import config from './src/app/config';
 
 Amplify.configure({
   Auth: {
@@ -58,10 +62,12 @@ const theme = {
 
 export default function App() {
   return (
-    <ThemeProvider theme={theme} >
-      <AuthContextProvider>
-        <Navigators />
-      </AuthContextProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme} >
+        <AuthContextProvider>
+          <Navigators />
+        </AuthContextProvider>
+      </ThemeProvider>
+    </Provider>
   );
 }

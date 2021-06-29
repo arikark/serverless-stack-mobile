@@ -3,9 +3,9 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import AccountScreen from '../screens/Account/AccountScreen';
-import NotesListScreen from '../screens/Notes/NotesListScreen';
-import MapsScreen from '../screens/Maps/MapsScreen';
+import AccountScreen from '../features/Account/screens/AccountScreen';
+import NotesListScreen from '../features/Notes/screens/NotesListScreen';
+import MapsScreen from '../features/Maps/screens/MapsScreen';
 
 const NotesStack = createStackNavigator();
 const NotesScreens = () => (

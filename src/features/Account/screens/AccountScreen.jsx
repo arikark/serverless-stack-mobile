@@ -1,16 +1,17 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Button } from 'react-native-elements';
-import { useAuthContext } from "../../contexts/AuthContext";
 
+import { useDispatch, useSelector } from 'react-redux'
+import { signOut, selectCurrentUser } from '../../Auth/authSlice';
 
 export default function AccountScreen() {
-  const { user, setUser, authState, setAuthState } = useAuthContext();
+	const authDispatch = useDispatch()
+  const user = useSelector(selectCurrentUser)
 
-  async function signOut() {
+  async function onSignOutSubmit() {
     try {
-      await Auth.signOut();
-      setAuthState('signedOut');
+      await authDispatch(signOut());
     } catch (error) {
       console.log('Error signing out: ', error);
     }
@@ -19,9 +20,10 @@ export default function AccountScreen() {
   return (
     <View style={styles.container}>
       <Text>Account Screen</Text>
-      <Text>Email: {user.attributes.email} </Text>
-      <Text>Status: {authState} </Text>
-      <Button title="Sign Out" color="tomato" onPress={signOut} />
+      <Text>Username: {user.username} </Text>
+      <Text>Email: {user.email} </Text>
+      <Text>Mobile: {user.phone_number} </Text>
+      <Button title="Sign Out" color="tomato" onPress={onSignOutSubmit} />
     </View>
   );
 }

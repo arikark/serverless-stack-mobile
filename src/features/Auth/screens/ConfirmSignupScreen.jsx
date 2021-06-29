@@ -6,25 +6,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card, Text, Input, Button } from 'react-native-elements';
 
-import { useAuthContext } from "../../contexts/AuthContext";
+import { useDispatch, useSelector } from 'react-redux'
+import { confirmSignUp, signIn } from '../authSlice'
 
 export default function ConfirmSignupScreen({ route, navigation }) {
-	const { user, setUser, authState, setAuthState } = useAuthContext();
+	// const { user, setUser, authState, setAuthState } = useAuthContext();
+	const authDispatch = useDispatch()
 	const [authCode, setAuthCode] = useState('');
 	const { username, password } = route.params;
 
-	async function confirmSignUp() {
+	async function onConfirmSignUpSubmit() {
 		try {
-			// await Auth.confirmSignUp(username, authCode);
-			console.log(username)
-			console.log(password)
-			// await Auth.signIn(username, password);
-			const currentUser = await Auth.currentAuthenticatedUser();
-			setUser(currentUser);
-			setAuthState('signedIn');
-			console.log('✅ Code confirmed');
-			console.log(user.attributes.email)
-			console.log(authState)
+			await authDispatch(confirmSignUp({ username, authCode }))
+      await authDispatch(signIn({ username, password }))
 			// navigation.navigate('SignIn');
 		} catch (error) {
 			console.log(
@@ -43,7 +37,7 @@ export default function ConfirmSignupScreen({ route, navigation }) {
 					autoCapitalize="none"
 					autoCorrect={false}
 				/>
-				<Button title='Confirm Sign Up' onPress={confirmSignUp} />
+				<Button title='Confirm Sign Up' onPress={onConfirmSignUpSubmit} />
 			</Card>
 		</SafeAreaView>
 	);

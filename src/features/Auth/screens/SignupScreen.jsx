@@ -6,19 +6,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card, Text, Input, Button } from 'react-native-elements';
 
-import { useAuthContext } from "../../contexts/AuthContext";
+import { signUp } from '../authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function SignupScreen({ navigation }) {
-	const { user, setUser, authState, setAuthState } = useAuthContext();
+	const authDispatch = useDispatch()
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
 
-	async function signUp() {
+	async function onSignUpSubmit() {
 		try {
-			await Auth.signUp({ username, password, attributes: { email } });
-			console.log('✅ Sign-up Complete');
-			// Is it safe to pass password via props?
+			// const payload = { username, password, attributes: { email } }
+			await authDispatch(signUp({ username, password, email }));
 			navigation.navigate('ConfirmSignup', { username, password });
 		} catch (error) {
 			console.log('❌ Error signing up...', error);
@@ -28,6 +28,7 @@ export default function SignupScreen({ navigation }) {
 	return (
 		<SafeAreaView style={styles.container}>
 			<Card>
+				<Card.Title>Sign Up</Card.Title>
 				<Input
 					label='Username'
 					value={username}
@@ -47,7 +48,7 @@ export default function SignupScreen({ navigation }) {
 					autoCapitalize="none"
 					autoCorrect={false}
 					secureTextEntry />
-				<Button title='Sign Up' onPress={() => signUp()} />
+				<Button title='Sign Up' onPress={onSignUpSubmit} />
 			</Card>
 		</SafeAreaView>
 	);

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Signin from './Signin';
-import SignupScreen from './SignupScreen';
+import SignupScreen from '../SignupScreen';
 
 export default function AuthScreen() {
   return (
