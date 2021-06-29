@@ -1,36 +1,32 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Auth } from 'aws-amplify';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { StyleSheet } from 'react-native';
 
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import NavLink from '../../../components/NavLink';
 import { Card, Text, Input, Button } from 'react-native-elements';
-import { Link } from '@react-navigation/native';
 
-import { useAuthContext } from "../../../contexts/AuthContext";
 import { useDispatch, useSelector } from 'react-redux'
-import { signIn } from '../authSlice'
+import { signIn, selectErrorMessage } from '../authSlice'
+import SpacedBackgroundLayout from '../../../components/SpacedBackgroundLayout';
 
-
-export default function SigninScreen({ navigation }) {
+export default function SigninScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  // const { user, userDispatch } = useAuthContext({});
-
+  const signInError = useSelector(selectErrorMessage)
   const authDispatch = useDispatch()
 
   async function onSignInSubmit() {
     try {
       await authDispatch(signIn({ username, password }))
+      console.log(signInError)
     } catch (error) {
-      console.log('❌ Error signing in...', error);
+      console.log('Error sending to dispatch...', error);
     }
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SpacedBackgroundLayout>
       <Card>
-        <Card.Title>Sign In</Card.Title>
         <Input
           label='Username'
           value={username}
@@ -45,17 +41,13 @@ export default function SigninScreen({ navigation }) {
           autoCapitalize="none"
           autoCorrect={false}
           secureTextEntry />
-        <Button title='Sign In' onPress={() => onSignInSubmit(username, password)} />
-        <Link to="/Signup">Sign Up</Link>
+        {signInError && <Text>{signInError}</Text>}
+        <Button title='Sign In' disabled={!username || !password} onPress={() => onSignInSubmit(username, password)} />
+        <NavLink text="Don't have an account? Sign up" routeName="/Signup" />
       </Card>
-    </SafeAreaView>
+    </SpacedBackgroundLayout>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    marginBottom: 200
-  }
-})
+
+

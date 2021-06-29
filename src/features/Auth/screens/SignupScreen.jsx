@@ -1,10 +1,8 @@
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Auth } from 'aws-amplify';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import SpacedBackgroundLayout from '../../../components/SpacedBackgroundLayout';
 
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Card, Text, Input, Button } from 'react-native-elements';
+import { StyleSheet } from 'react-native';
+import { Card, Input, Button } from 'react-native-elements';
 
 import { signUp } from '../authSlice'
 import { useDispatch, useSelector } from 'react-redux'
@@ -19,6 +17,7 @@ export default function SignupScreen({ navigation }) {
 		try {
 			// const payload = { username, password, attributes: { email } }
 			await authDispatch(signUp({ username, password, email }));
+			// only navigate if success
 			navigation.navigate('ConfirmSignup', { username, password });
 		} catch (error) {
 			console.log('❌ Error signing up...', error);
@@ -26,9 +25,8 @@ export default function SignupScreen({ navigation }) {
 	}
 
 	return (
-		<SafeAreaView style={styles.container}>
+    <SpacedBackgroundLayout>
 			<Card>
-				<Card.Title>Sign Up</Card.Title>
 				<Input
 					label='Username'
 					value={username}
@@ -48,16 +46,17 @@ export default function SignupScreen({ navigation }) {
 					autoCapitalize="none"
 					autoCorrect={false}
 					secureTextEntry />
-				<Button title='Sign Up' onPress={onSignUpSubmit} />
+				<Button title='Sign Up' disabled={!username || !password || !email} onPress={onSignUpSubmit} />
 			</Card>
-		</SafeAreaView>
+    </SpacedBackgroundLayout>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: "center",
-		marginBottom: 200
+	card: {
+		shadowColor: 'rgba(0,0,0, .2)',
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0, //default is 1
+    shadowRadius: 0//default is 1
 	}
 })

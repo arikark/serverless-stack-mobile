@@ -1,25 +1,22 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Auth } from 'aws-amplify';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Card, Text, Input, Button } from 'react-native-elements';
+import SpacedBackgroundLayout from '../../../components/SpacedBackgroundLayout';
+import { Card, Input, Button } from 'react-native-elements';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { confirmSignUp, signIn } from '../authSlice'
+import { confirmSignUp, signIn, selectErrorMessage } from '../authSlice'
 
-export default function ConfirmSignupScreen({ route, navigation }) {
-	// const { user, setUser, authState, setAuthState } = useAuthContext();
+export default function ConfirmSignupScreen({ route }) {
 	const authDispatch = useDispatch()
+	const signUpError = useSelector(selectErrorMessage)
 	const [authCode, setAuthCode] = useState('');
-	const { username, password } = route.params;
+	const { username, password, email } = route.params;
 
 	async function onConfirmSignUpSubmit() {
 		try {
 			await authDispatch(confirmSignUp({ username, authCode }))
-      await authDispatch(signIn({ username, password }))
-			// navigation.navigate('SignIn');
+      !signUpError && await authDispatch(signIn({ username, password }))
 		} catch (error) {
 			console.log(
 				'❌ Verification code does not match. Please enter a valid verification code.',
@@ -28,8 +25,9 @@ export default function ConfirmSignupScreen({ route, navigation }) {
 		}
 	}
 	return (
-		<SafeAreaView style={styles.container}>
+    <SpacedBackgroundLayout>
 			<Card>
+				<Card.Title>Confirmation code sent to {email}</Card.Title>
 				<Input
 					label='Confirmation Code'
 					onChangeText={setAuthCode}
@@ -39,14 +37,6 @@ export default function ConfirmSignupScreen({ route, navigation }) {
 				/>
 				<Button title='Confirm Sign Up' onPress={onConfirmSignUpSubmit} />
 			</Card>
-		</SafeAreaView>
+    </SpacedBackgroundLayout>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: "center",
-		marginBottom: 200
-	}
-})

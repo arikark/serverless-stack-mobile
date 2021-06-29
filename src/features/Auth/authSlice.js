@@ -77,6 +77,7 @@ const authSlice = createSlice({
     },
     [signUp.fulfilled]: (state, action) => {
       state.status = 'succeeded'
+      state.error = null
     },
     [signUp.rejected]: (state, action) => {
       state.status = 'failed'
@@ -114,3 +115,5 @@ const authSlice = createSlice({
 
 export default authSlice.reducer
 export const selectCurrentUser = state => state.auth.data
+export const selectErrorMessage = state => state.auth.error
+

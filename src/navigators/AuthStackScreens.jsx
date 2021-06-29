@@ -10,10 +10,30 @@ import ConfirmSignupScreen from '../features/Auth/screens/ConfirmSignupScreen';
 const AuthStack = createStackNavigator();
 function AuthStackScreens() {
   return (
-    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
-      <AuthStack.Screen name="Signin" component={SigninScreen} />
-      <AuthStack.Screen name="Signup" component={SignupScreen} />
-      <AuthStack.Screen name="ConfirmSignup" component={ConfirmSignupScreen} />
+    <AuthStack.Navigator screenOptions={{
+      headerShown: true,
+      headerTransparent: true,
+      headerTitleAlign: "center",
+      headerTitleStyle: {
+        fontWeight: 'bold'
+      },
+      animationEnabled: true,
+    }}>
+      <AuthStack.Screen
+        name="Signin"
+        component={SigninScreen}
+        options={{title: 'Login' }}
+      />
+      <AuthStack.Screen
+        name="Signup"
+        component={SignupScreen}
+        options={{ title: 'Register' }}
+      />
+      <AuthStack.Screen
+        name="ConfirmSignup"
+        component={ConfirmSignupScreen}
+        options={{ title: "Confirm Email" }}
+      />
     </AuthStack.Navigator>
   );
 };
