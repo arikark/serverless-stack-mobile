@@ -1,5 +1,5 @@
-import React from 'react';
-import { ThemeProvider } from 'react-native-elements';
+import React from "react";
+import { ThemeProvider } from "react-native-elements";
 
 import {
   useFonts,
@@ -7,15 +7,16 @@ import {
   Montserrat_400Regular,
 } from "@expo-google-fonts/dev";
 
-export default function CustomThemeProvider({ children, variant }) {
+export default function CustomThemeProvider({ children }) {
   useFonts({
     Montserrat_400Regular,
-    Montserrat_300Light
+    Montserrat_300Light,
   });
   const defaultTheme = {
     Button: {
       containerStyle: {
         marginBottom: 8,
+        marginTop: 8,
       },
       buttonStyle: {
         width: "100%",
@@ -35,19 +36,15 @@ export default function CustomThemeProvider({ children, variant }) {
     },
     Card: {
       containerStyle: {
-        backgroundColor: 'rgba(225, 238, 242, 0.8)'
-      }
+        backgroundColor: "rgba(225, 238, 242, 0.8)",
+      },
     },
     Text: {
       style: {
-        color: "red"
-      }
+        color: "red",
+      },
     },
   };
 
-  return (
-  <ThemeProvider theme={defaultTheme}>
-    {children}
-  </ThemeProvider>
-  )
+  return <ThemeProvider theme={defaultTheme}>{children}</ThemeProvider>;
 }

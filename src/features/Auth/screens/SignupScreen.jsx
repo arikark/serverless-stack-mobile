@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import SpacedBackgroundLayout from '../../../components/SpacedBackgroundLayout';
+import React, { useState, useEffect } from 'react';
 
-import { StyleSheet } from 'react-native';
+import SpacedBackgroundLayout from '../../../components/SpacedBackgroundLayout';
 import { Card, Input, Button } from 'react-native-elements';
 
-import { signUp } from '../authSlice'
+import { signUp, selectApiStatus } from '../authSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function SignupScreen({ navigation }) {
@@ -12,17 +11,19 @@ export default function SignupScreen({ navigation }) {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [email, setEmail] = useState('');
+	const authApiStatus = useSelector(selectApiStatus)
 
 	async function onSignUpSubmit() {
 		try {
-			// const payload = { username, password, attributes: { email } }
 			await authDispatch(signUp({ username, password, email }));
-			// only navigate if success
-			navigation.navigate('ConfirmSignup', { username, password });
 		} catch (error) {
 			console.log('❌ Error signing up...', error);
 		}
 	}
+
+	useEffect(() => {
+		authApiStatus === "signUpSucceeded" && navigation.navigate('ConfirmSignup', { username, password });
+  }, [authApiStatus])
 
 	return (
     <SpacedBackgroundLayout>
@@ -46,17 +47,13 @@ export default function SignupScreen({ navigation }) {
 					autoCapitalize="none"
 					autoCorrect={false}
 					secureTextEntry />
-				<Button title='Sign Up' disabled={!username || !password || !email} onPress={onSignUpSubmit} />
+				<Button
+					title='Sign Up'
+					loading={ authApiStatus.includes('Loading') }
+					disabled={!username || !password || !email}
+					onPress={onSignUpSubmit} />
 			</Card>
     </SpacedBackgroundLayout>
 	);
 }
 
-const styles = StyleSheet.create({
-	card: {
-		shadowColor: 'rgba(0,0,0, .2)',
-    shadowOffset: { height: 0, width: 0 },
-    shadowOpacity: 0, //default is 1
-    shadowRadius: 0//default is 1
-	}
-})

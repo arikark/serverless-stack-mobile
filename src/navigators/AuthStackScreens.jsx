@@ -6,6 +6,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SigninScreen from '../features/Auth/screens/SigninScreen'
 import SignupScreen from '../features/Auth/screens/SignupScreen';
 import ConfirmSignupScreen from '../features/Auth/screens/ConfirmSignupScreen';
+import InitResetPasswordScreen from '../features/Auth/screens/InitResetPasswordScreen';
+import ResetPasswordScreen from '../features/Auth/screens/ResetPasswordScreen';
 
 const AuthStack = createStackNavigator();
 function AuthStackScreens() {
@@ -33,6 +35,16 @@ function AuthStackScreens() {
         name="ConfirmSignup"
         component={ConfirmSignupScreen}
         options={{ title: "Confirm Email" }}
+      />
+      <AuthStack.Screen
+        name="InitResetPassword"
+        component={InitResetPasswordScreen}
+        options={{ title: "Reset Password" }}
+      />
+      <AuthStack.Screen
+        name="ResetPassword"
+        component={ResetPasswordScreen}
+        options={{ title: "Reset Password" }}
       />
     </AuthStack.Navigator>
   );

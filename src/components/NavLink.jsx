@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native'
 
 import { Link } from '@react-navigation/native';
 
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     // borderColor: "red",
     // borderWidth: 1,
-    marginTop: 4,
+    margin: 8,
     textDecorationLine: "underline"
   }
 })

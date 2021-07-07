@@ -3,12 +3,13 @@ import { StyleSheet} from 'react-native';
 import { Text, Button } from 'react-native-elements';
 
 import { useDispatch, useSelector } from 'react-redux'
-import { signOut, selectCurrentUser } from '../../Auth/authSlice';
+import { signOut, selectCurrentUser, selectApiStatus } from '../../Auth/authSlice';
 
 import SpacedBackgroundLayout from '../../../components/SpacedBackgroundLayout';
 
 export default function AccountScreen() {
-	const authDispatch = useDispatch()
+  const authDispatch = useDispatch()
+  const authApiStatus = useSelector(selectApiStatus)
   const user = useSelector(selectCurrentUser)
 
   async function onSignOutSubmit() {
@@ -25,7 +26,11 @@ export default function AccountScreen() {
       <Text>Username: {user.username}</Text>
       <Text>Email: {user.email}</Text>
       <Text>Mobile: {user.phone_number} </Text>
-      <Button title="Sign Out" color="tomato" onPress={onSignOutSubmit} />
+      <Button
+        title="Sign Out"
+        loading={ authApiStatus.includes('Loading') }
+        color="tomato"
+        onPress={onSignOutSubmit} />
     </SpacedBackgroundLayout>
   );
 }
