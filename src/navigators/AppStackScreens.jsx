@@ -72,8 +72,9 @@ export default function AppStackScreens() {
         },
         activeTintColor: "blue",
         style: {
-          backgroundColor: "transparent",
+          backgroundColor: "rgba(225, 238, 242, 0.8)",
           position: "absolute",
+          top: 50,
           left: 0,
           right: 0,
           elevation: 0,

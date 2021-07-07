@@ -1,35 +1,13 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { Text, Button } from "react-native-elements";
+import { StyleSheet, Text, View, FlatList, SafeAreaView } from "react-native";
+import ScrollList from "../../../components/ScrollList";
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  signOut,
-  selectCurrentUser,
-  selectApiStatus,
-} from "../../Auth/authSlice";
-
-import SpacedBackgroundLayout from "../../../components/SpacedBackgroundLayout";
+import SpacedContainer from "../../../components/SpacedContainer";
 
 export default function SwipeScreen() {
-  const authDispatch = useDispatch();
-  const authApiStatus = useSelector(selectApiStatus);
-  const user = useSelector(selectCurrentUser);
-
-  async function onSignOutSubmit() {
-    try {
-      await authDispatch(signOut());
-    } catch (error) {
-      console.log("Error signing out: ", error);
-    }
-  }
-
-  return <SpacedBackgroundLayout></SpacedBackgroundLayout>;
+  return (
+    <SpacedContainer>
+      <ScrollList />
+    </SpacedContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-  },
-});
