@@ -11,7 +11,7 @@ import {
 
 import SpacedBackgroundLayout from "../../../components/SpacedBackgroundLayout";
 
-export default function NotesScreen() {
+export default function SwipeScreen() {
   const authDispatch = useDispatch();
   const authApiStatus = useSelector(selectApiStatus);
   const user = useSelector(selectCurrentUser);

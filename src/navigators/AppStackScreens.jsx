@@ -8,28 +8,28 @@ import { Feather } from "@expo/vector-icons";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import AccountScreen from "../features/Account/screens/AccountScreen";
-import NotesListScreen from "../features/Notes/screens/NotesListScreen";
+import SwipeScreen from "../features/Swipe/screens/SwipeScreen";
 import MapsScreen from "../features/Maps/screens/MapsScreen";
 
-const NotesStack = createStackNavigator();
-const NotesScreens = () => (
-  <NotesStack.Navigator screenOptions={{ headerShown: false }}>
-    <NotesStack.Screen name="Notes" component={NotesListScreen} />
-  </NotesStack.Navigator>
+const StackOne = createStackNavigator();
+const StackOneScreens = () => (
+  <StackOne.Navigator screenOptions={{ headerShown: false }}>
+    <StackOne.Screen name="Notes" component={SwipeScreen} />
+  </StackOne.Navigator>
 );
 
-const MapsStack = createStackNavigator();
-const MapsScreens = () => (
-  <MapsStack.Navigator screenOptions={{ headerShown: false }}>
-    <MapsStack.Screen name="Maps" component={MapsScreen} />
-  </MapsStack.Navigator>
+const StackTwo = createStackNavigator();
+const StackTwoScreens = () => (
+  <StackTwo.Navigator screenOptions={{ headerShown: false }}>
+    <StackTwo.Screen name="Maps" component={MapsScreen} />
+  </StackTwo.Navigator>
 );
 
-const AccountStack = createStackNavigator();
-const AccountScreens = () => (
-  <AccountStack.Navigator screenOptions={{ headerShown: false }}>
-    <AccountStack.Screen name="Account" component={AccountScreen} />
-  </AccountStack.Navigator>
+const StackThree = createStackNavigator();
+const StackThreeScreens = () => (
+  <StackThree.Navigator screenOptions={{ headerShown: false }}>
+    <StackThree.Screen name="Account" component={AccountScreen} />
+  </StackThree.Navigator>
 );
 
 // const AppStack = createBottomTabNavigator();
@@ -83,21 +83,21 @@ export default function AppStackScreens() {
     >
       <AppStack.Screen
         name="Notes"
-        component={NotesScreens}
+        component={StackOneScreens}
         options={{
           tabBarIcon: () => <Feather name="home" size={24} color="black" />,
         }}
       />
       <AppStack.Screen
         name="Maps"
-        component={MapsScreens}
+        component={StackTwoScreens}
         options={{
           tabBarIcon: () => <Feather name="map" size={24} color="black" />,
         }}
       />
       <AppStack.Screen
         name="Account"
-        component={AccountScreens}
+        component={StackThreeScreens}
         options={{
           tabBarIcon: () => <Feather name="settings" size={24} color="black" />,
         }}
